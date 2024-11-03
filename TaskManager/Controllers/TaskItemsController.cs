@@ -52,6 +52,11 @@ namespace TaskManager.Controllers
                 return BadRequest();
             }
 
+            foreach (var item in taskItem.cheakLists!)
+            {
+                _context.Entry(item).State = EntityState.Modified;
+            }
+
             _context.Entry(taskItem).State = EntityState.Modified;
 
             try

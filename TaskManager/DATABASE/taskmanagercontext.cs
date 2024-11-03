@@ -13,6 +13,8 @@ namespace TaskManager.DATABASE
         public DbSet<User> users { get; set; }
         public DbSet<Address> addresses { get; set; }
 
+        public DbSet<UserLogin> usersLogin { get; set; }
+
 
         protected override void
         OnModelCreating(ModelBuilder modelBuilder)
