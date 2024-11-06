@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TaskManager.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class intial2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,6 +28,21 @@ namespace TaskManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "usersLogin",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_usersLogin", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "addresses",
                 columns: table => new
                 {
@@ -45,7 +60,8 @@ namespace TaskManager.Migrations
                         name: "FK_addresses_users_UserId",
                         column: x => x.UserId,
                         principalTable: "users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,7 +83,8 @@ namespace TaskManager.Migrations
                         name: "FK_Tasks_users_UserId",
                         column: x => x.UserId,
                         principalTable: "users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -117,6 +134,9 @@ namespace TaskManager.Migrations
 
             migrationBuilder.DropTable(
                 name: "CheakList");
+
+            migrationBuilder.DropTable(
+                name: "usersLogin");
 
             migrationBuilder.DropTable(
                 name: "Tasks");

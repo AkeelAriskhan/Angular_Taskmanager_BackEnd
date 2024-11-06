@@ -38,19 +38,27 @@ namespace TaskManager.Controllers
         [HttpPost ("login")]
         public async  Task<IActionResult> Login(LoginRequest LoginRequest)
         {
-            var user=await _context.usersLogin.SingleOrDefaultAsync(u=>u.Email==LoginRequest.Email);    
-            if (user==null)
+            try
             {
-                throw new Exception("user not found");
+                var user = await _context.usersLogin.SingleOrDefaultAsync(u => u.Email == LoginRequest.Email);
+                if (user == null)
+                {
+                    throw new Exception("user not found");
+                }
+                var isLogin = BCrypt.Net.BCrypt.Verify(LoginRequest.Password, user.Password);
+                if (isLogin)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    throw new Exception("password invalid");
+                }
             }
-            var isLogin = BCrypt.Net.BCrypt.Verify(LoginRequest.Password, user.Password);
-            if (isLogin)
+            catch (Exception ex) 
             {
-                return Ok(user);
-            }
-            else 
-            {
-                throw new Exception("password invalid");
+            
+             return BadRequest(ex.Message);
             }
         }
      }

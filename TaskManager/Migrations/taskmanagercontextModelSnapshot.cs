@@ -171,7 +171,8 @@ namespace TaskManager.Migrations
                 {
                     b.HasOne("TaskManager.Modules.User", "User")
                         .WithOne("Address")
-                        .HasForeignKey("TaskManager.Modules.Address", "UserId");
+                        .HasForeignKey("TaskManager.Modules.Address", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });
@@ -191,7 +192,8 @@ namespace TaskManager.Migrations
                 {
                     b.HasOne("TaskManager.Modules.User", "User")
                         .WithMany("TaskItems")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });

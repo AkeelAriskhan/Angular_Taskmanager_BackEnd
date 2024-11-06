@@ -12,8 +12,8 @@ using TaskManager.DATABASE;
 namespace TaskManager.Migrations
 {
     [DbContext(typeof(taskmanagercontext))]
-    [Migration("20241027055626_initial")]
-    partial class initial
+    [Migration("20241106124758_intial2")]
+    partial class intial2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,11 +144,38 @@ namespace TaskManager.Migrations
                     b.ToTable("users");
                 });
 
+            modelBuilder.Entity("TaskManager.Modules.UserLogin", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("usersLogin");
+                });
+
             modelBuilder.Entity("TaskManager.Modules.Address", b =>
                 {
                     b.HasOne("TaskManager.Modules.User", "User")
                         .WithOne("Address")
-                        .HasForeignKey("TaskManager.Modules.Address", "UserId");
+                        .HasForeignKey("TaskManager.Modules.Address", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });
@@ -168,7 +195,8 @@ namespace TaskManager.Migrations
                 {
                     b.HasOne("TaskManager.Modules.User", "User")
                         .WithMany("TaskItems")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });

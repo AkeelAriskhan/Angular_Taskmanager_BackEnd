@@ -22,18 +22,21 @@ namespace TaskManager.DATABASE
             modelBuilder.Entity<User>()
                 .HasOne(p=>p.Address)
                 .WithOne(p=>p.User)
-                .HasForeignKey<Address>(p=>p.UserId);
+                .HasForeignKey<Address>(p=>p.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<User>()
                 .HasMany(o=>o.TaskItems)
                 .WithOne(p=>p.User)
-                .HasForeignKey(p=>p.UserId);
+                .HasForeignKey(p=>p.UserId)
+                .OnDelete(DeleteBehavior.Cascade); ;
 
             modelBuilder.Entity<TaskItem>()
                 .HasMany(o=>o.cheakLists)
                 .WithOne(o=>o.Task)
-                .HasForeignKey(p=>p.TaskId );
+                .HasForeignKey(p=>p.TaskId )
+                .OnDelete(DeleteBehavior.Cascade); ;
 
             base.OnModelCreating(modelBuilder);
         }
