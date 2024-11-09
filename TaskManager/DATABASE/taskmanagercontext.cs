@@ -30,13 +30,13 @@ namespace TaskManager.DATABASE
                 .HasMany(o=>o.TaskItems)
                 .WithOne(p=>p.User)
                 .HasForeignKey(p=>p.UserId)
-                .OnDelete(DeleteBehavior.Cascade); ;
+                .OnDelete(DeleteBehavior.Cascade) ;
 
             modelBuilder.Entity<TaskItem>()
-                .HasMany(o=>o.cheakLists)
-                .WithOne(o=>o.Task)
-                .HasForeignKey(p=>p.TaskId )
-                .OnDelete(DeleteBehavior.Cascade); ;
+                .HasMany(o => o.cheakLists)
+                .WithOne(o => o.Task)
+                .HasForeignKey(p => p.TaskId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }
