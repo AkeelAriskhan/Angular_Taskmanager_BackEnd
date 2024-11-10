@@ -56,8 +56,10 @@ namespace TaskManager.Controllers
                 var isLogin = BCrypt.Net.BCrypt.Verify(LoginRequest.Password, user.Password);
                 if (isLogin)
                 {
-                   
-                    return Ok(CreateToken(user));
+                    var a = CreateToken(user);
+                    var b = new tokenResponseModel();
+                    b.Token = a;
+                    return Ok(b);
                 } 
                 else
                 {
